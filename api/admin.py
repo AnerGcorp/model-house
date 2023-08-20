@@ -5,9 +5,9 @@ from .models import (
     Language, SubCategory, Category, Logo, AboutUs, SubAboutUs,
     Slider, SubSlider, SubAboutCompany, AboutCompany, SubMoreAboutUs,
     MoreAboutUs, NewsImage, SubNews, News, SubService, Service,
+    GalleryImage, SubGallery, Gallery,
+    # ContactUs, AboutUs, SubAboutUs, Contacts,
     # Statistics, SubStatistics,
-    #   Gallery,
-    # GalleryImage, SubGallery, ContactUs, AboutUs, SubAboutUs, Contacts,
     # SubContacts, AboutCompany, SubAboutCompany, Partner
     )
 
@@ -56,6 +56,16 @@ class SubServiceInlineAdmin(admin.StackedInline):
 class ServiceAdmin(admin.ModelAdmin):
     inlines = [SubServiceInlineAdmin, ]
 
+class GalleryImageInlineAdmin(SuperInlineModelAdmin, admin.StackedInline):
+    model = GalleryImage
+
+class SubGalleryInlineAdmin(SuperInlineModelAdmin, admin.StackedInline):
+    model = SubGallery
+    inlines = [GalleryImageInlineAdmin, ]
+
+class GalleryAdmin(SuperModelAdmin):
+    inlines = [SubGalleryInlineAdmin,]
+
 
 admin.site.register(Language)
 admin.site.register(Category, CategoryAdmin)
@@ -66,3 +76,4 @@ admin.site.register(AboutCompany, AboutCompanyAdmin)
 admin.site.register(MoreAboutUs, MoreAboutUsAdmin)
 admin.site.register(News, NewsAdmin)
 admin.site.register(Service, ServiceAdmin)
+admin.site.register(Gallery, GalleryAdmin)

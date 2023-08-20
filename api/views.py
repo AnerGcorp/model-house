@@ -4,13 +4,13 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import (
     Category, Logo, AboutUs, Slider, AboutCompany, MoreAboutUs, News,
-    Service
+    Service, Gallery
 )
 
 from .serializers import (
     CategorySerializer, LogoSerializer, AboutUsSerializer,
     SliderSerializer, AboutCompanySerializer, MoreAboutUsSerializer,
-    NewsSerializer, ServiceSerializer
+    NewsSerializer, ServiceSerializer, GallerySerializer
 )
 
 from .utils import JSONListFormatter
@@ -276,6 +276,44 @@ class ServiceDetailApiView(APIView):
         serializer = ServiceSerializer(ser_instance)
         try:
             data = JSONListFormatter("service", name_obj=serializer.data)
+        except:
+            data = []
+        return Response(data, status=status.HTTP_200_OK)
+
+class GalleryListApiView(APIView):
+
+    def get(self, request, *args, **kwargs):
+        gallery = Gallery.objects.all().order_by('-id')
+        serializer = GallerySerializer(gallery, many=True)
+        print(serializer.data)
+        try:
+            data = JSONListFormatter("gallery", serializer.data)
+        except:
+            data = []
+
+        return Response(data, status=status.HTTP_200_OK)
+
+class GalleryDetailApiView(APIView):
+
+    def get_object(self, gallery_id):
+        try:
+            return Gallery.objects.get(id=gallery_id)
+        except Gallery.DoesNotExist:
+            return None
+
+    def get(self, request, gallery_id, *args, **kwargs):
+        '''
+            Retrieves the object with given gallery_id
+        '''
+        gallery_instance = self.get_object(gallery_id)
+        if not gallery_instance:
+            return Response(
+                {"response": "Object with given id does not exist"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        serializer = GallerySerializer(gallery_instance)
+        try:
+            data = JSONListFormatter("gallery", name_obj=serializer.data)
         except:
             data = []
         return Response(data, status=status.HTTP_200_OK)

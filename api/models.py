@@ -159,3 +159,25 @@ class SubService(models.Model):
     button = models.CharField(max_length=2048, blank=True, null=True)
     belong = models.ForeignKey('Service', on_delete=models.CASCADE, related_name='service')
     lang = models.ForeignKey('Language', on_delete=models.CASCADE, related_name='lang_ser')
+
+class GalleryImage(models.Model):
+    title = models.CharField(max_length=255)
+    image = models.ImageField(upload_to="images/gallery", blank=True, null=True)
+    belongs_to = models.ForeignKey(
+        'SubGallery', on_delete=models.CASCADE, related_name="gallery_images")
+
+class Gallery(models.Model):
+    class Meta:
+        verbose_name_plural = "Gallery"
+
+    is_active = models.BooleanField(default=False)
+    created = models.DateTimeField(auto_now_add=True, auto_now=False)
+    updated = models.DateTimeField(auto_now=True, blank=True)
+
+
+class SubGallery(models.Model):
+    title = models.CharField(max_length=500, blank=True, null=True)
+    description = RichTextField()
+    button = models.CharField(max_length=100)
+    belong = models.ForeignKey('Gallery', on_delete=models.CASCADE, related_name='gallery')
+    lang = models.ForeignKey('Language', on_delete=models.CASCADE, related_name='lang_glr')

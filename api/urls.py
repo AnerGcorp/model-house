@@ -5,9 +5,9 @@ from .views import (
     AboutUsDetailApiView, SliderListApiView, SliderDetailApiView,
     AboutCompanyListApiView, AboutCompanyDetailApiView, MoreAboutUsListApiView,
     MoreAboutUsDetailApiView, NewsListApiView, NewsDetailApiView,
-    ServiceListApiView, ServiceDetailApiView
-    # StatisticsListApiView, StatisticsDetailApiView,
-    #   GalleryListApiView, GalleryDetailApiView, ContactUsViewSet,
+    ServiceListApiView, ServiceDetailApiView, GalleryListApiView,
+    GalleryDetailApiView,
+    # StatisticsListApiView, StatisticsDetailApiView, ContactUsViewSet,
     #  ContactsListApiView, ContactsDetailApiView, PartnerViewSet
 )
 
@@ -37,11 +37,11 @@ urlpatterns = [
     # services
     path('services/', ServiceListApiView.as_view(), name="service"),
     path('services/<int:ser_id>', ServiceDetailApiView.as_view(), name="service_detail"),
+    path('gallery/', GalleryListApiView.as_view(), name="gallery"),
+    path("gallery/<int:gallery_id>", GalleryDetailApiView.as_view(), name="gallery_detail"),
 
     # path('statistics/', StatisticsListApiView.as_view(), name="statistics"),
     # path('statistics/<int:statistics_id>', StatisticsDetailApiView.as_view(), name="statistics_detail"),
-    # path('gallery/', GalleryListApiView.as_view(), name="gallery"),
-    # path("gallery/<int:gallery_id>", GalleryDetailApiView.as_view(), name="gallery_detail"),
     # path('contacts/', ContactsListApiView.as_view(), name="cont"),
     # path('contacts/<int:cont_id>', ContactsDetailApiView.as_view(), name="cont_detail"),
 
