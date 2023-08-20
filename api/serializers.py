@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import (
-    Language, Category, SubCategory
+    Language, Category, SubCategory, Logo
 )
 
 class LanguageSerializer(serializers.ModelSerializer):
@@ -19,3 +19,9 @@ class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = "__all__"
+
+class LogoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Logo
+        fields = "__all__"
+

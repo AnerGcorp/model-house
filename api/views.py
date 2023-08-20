@@ -3,11 +3,11 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework import status
 from .models import (
-    Category,
+    Category, Logo
 )
 
 from .serializers import (
-    CategorySerializer
+    CategorySerializer, LogoSerializer
 )
 
 from .utils import JSONListFormatter
@@ -50,3 +50,7 @@ class CategoryDetailApiView(APIView):
         except:
             data = []
         return Response(data, status=status.HTTP_200_OK)
+
+class LogoViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Logo.objects.all().order_by("id")
+    serializer_class = LogoSerializer

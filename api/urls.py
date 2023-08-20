@@ -1,8 +1,8 @@
 from django.urls import include, path
 from rest_framework import routers
 from .views import (
-    CategoryListApiView, CategoryDetailApiView,
-    # SliderListApiView, LogoViewSet,
+    CategoryListApiView, CategoryDetailApiView, LogoViewSet,
+    # SliderListApiView,
     # SliderDetailApiView, StatisticsListApiView, StatisticsDetailApiView,
     # MoreAboutUsListApiView, MoreAboutUsDetailApiView, NewsListApiView,
     # NewsDetailApiView, GalleryListApiView, GalleryDetailApiView, ContactUsViewSet,
@@ -14,7 +14,7 @@ from .views import (
 app_name = 'modeller'
 
 router = routers.DefaultRouter()
-# router.register(r"logo", LogoViewSet, basename="logo")
+router.register(r"logo", LogoViewSet, basename="logo")
 # router.register(r'contact-us', ContactUsViewSet, basename="contact_us")
 # router.register(r"partners", PartnerViewSet, basename="partner")
 

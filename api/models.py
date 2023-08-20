@@ -33,3 +33,12 @@ class SubCategory(models.Model):
     def __str__(self):
         return self.name
 
+class Logo(models.Model):
+    icon = models.FileField(
+        upload_to="images/",
+        validators=[FileExtensionValidator(['png', 'jpg', 'svg', "jpeg", "webp"])],
+        blank=True, null=True)
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name

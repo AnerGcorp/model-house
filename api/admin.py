@@ -2,7 +2,7 @@ from django.contrib import admin
 from super_inlines.admin import SuperInlineModelAdmin, SuperModelAdmin
 
 from .models import (
-    Language, SubCategory, Category,
+    Language, SubCategory, Category, Logo
     # Slider, SubSlider, Statistics, SubStatistics,
     # MoreAboutUs, SubMoreAboutUs, News, NewsImage, SubNews, Gallery,
     # GalleryImage, SubGallery, ContactUs, AboutUs, SubAboutUs, Contacts,
@@ -16,5 +16,6 @@ class CategoryAdmin(admin.ModelAdmin):
     inlines = [SubCategoryInlineAdmin, ]
 
 
+admin.site.register(Logo)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Language)
