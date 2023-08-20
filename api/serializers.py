@@ -3,7 +3,7 @@ from .models import (
     Language, Category, SubCategory, Logo, SubAboutUs, AboutUs,
     SubSlider, Slider, SubAboutCompany, AboutCompany, SubMoreAboutUs,
     MoreAboutUs, NewsImage, SubNews, News, SubService, Service,
-    GalleryImage, SubGallery, Gallery
+    GalleryImage, SubGallery, Gallery, SubContacts, Contacts
 )
 
 class LanguageSerializer(serializers.ModelSerializer):
@@ -125,3 +125,14 @@ class GallerySerializer(serializers.ModelSerializer):
         model = Gallery
         fields = "__all__"
 
+class SubContactsSerializer(serializers.ModelSerializer):
+    lang = LanguageSerializer()
+    class Meta:
+        model = SubContacts
+        exclude = ("id", "belong",)
+
+class ContactsSerializer(serializers.ModelSerializer):
+    contacts = SubContactsSerializer(many=True)
+    class Meta:
+        model = Contacts
+        fields = "__all__"

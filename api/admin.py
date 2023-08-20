@@ -5,10 +5,7 @@ from .models import (
     Language, SubCategory, Category, Logo, AboutUs, SubAboutUs,
     Slider, SubSlider, SubAboutCompany, AboutCompany, SubMoreAboutUs,
     MoreAboutUs, NewsImage, SubNews, News, SubService, Service,
-    GalleryImage, SubGallery, Gallery,
-    # ContactUs, AboutUs, SubAboutUs, Contacts,
-    # Statistics, SubStatistics,
-    # SubContacts, AboutCompany, SubAboutCompany, Partner
+    GalleryImage, SubGallery, Gallery, SubContacts, Contacts
     )
 
 class SubCategoryInlineAdmin(admin.StackedInline):
@@ -66,6 +63,11 @@ class SubGalleryInlineAdmin(SuperInlineModelAdmin, admin.StackedInline):
 class GalleryAdmin(SuperModelAdmin):
     inlines = [SubGalleryInlineAdmin,]
 
+class SubContactsInlineAdmin(admin.StackedInline):
+    model = SubContacts
+
+class ContactsAdmin(admin.ModelAdmin):
+    inlines = [SubContactsInlineAdmin, ]
 
 admin.site.register(Language)
 admin.site.register(Category, CategoryAdmin)
@@ -77,3 +79,4 @@ admin.site.register(MoreAboutUs, MoreAboutUsAdmin)
 admin.site.register(News, NewsAdmin)
 admin.site.register(Service, ServiceAdmin)
 admin.site.register(Gallery, GalleryAdmin)
+admin.site.register(Contacts, ContactsAdmin)

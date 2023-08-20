@@ -181,3 +181,21 @@ class SubGallery(models.Model):
     button = models.CharField(max_length=100)
     belong = models.ForeignKey('Gallery', on_delete=models.CASCADE, related_name='gallery')
     lang = models.ForeignKey('Language', on_delete=models.CASCADE, related_name='lang_glr')
+
+class Contacts(models.Model):
+    class Meta:
+        verbose_name_plural = "Contacts"
+        verbose_name = "Contacts"
+    phone_numbers = models.CharField(max_length=1000)
+    emails = models.CharField(max_length=1000)
+
+    def __str__(self):
+        return self.emails
+
+class SubContacts(models.Model):
+    class Meta:
+        verbose_name_plural = "SubContacts"
+
+    address = models.CharField(max_length=1000)
+    belong = models.ForeignKey('Contacts', on_delete=models.CASCADE, related_name='contacts')
+    lang = models.ForeignKey('Language', on_delete=models.CASCADE, related_name='lang_cont')
