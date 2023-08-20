@@ -3,11 +3,12 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework import status
 from .models import (
-    Category, Logo
+    Category, Logo, AboutUs, Slider
 )
 
 from .serializers import (
-    CategorySerializer, LogoSerializer
+    CategorySerializer, LogoSerializer, AboutUsSerializer,
+    SliderSerializer
 )
 
 from .utils import JSONListFormatter
@@ -54,3 +55,77 @@ class CategoryDetailApiView(APIView):
 class LogoViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Logo.objects.all().order_by("id")
     serializer_class = LogoSerializer
+
+class AboutUsListApiView(APIView):
+
+    def get(self, request, *args, **kwargs):
+        about_us = AboutUs.objects.all().order_by('-id')
+        serializer = AboutUsSerializer(about_us, many=True)
+        try:
+            data = JSONListFormatter("about_us", serializer.data)
+        except:
+            data = []
+
+        return Response(data, status=status.HTTP_200_OK)
+
+class AboutUsDetailApiView(APIView):
+
+    def get_object(self, abu_id):
+        try:
+            return AboutUs.objects.get(id=abu_id)
+        except AboutUs.DoesNotExist:
+            return None
+
+    def get(self, request, abu_id, *args, **kwargs):
+        '''
+            Retrieves the object with given abu_id
+        '''
+        abu_instance = self.get_object(abu_id)
+        if not abu_instance:
+            return Response(
+                {"response": "Object with given id does not exist"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        serializer = AboutUsSerializer(abu_instance)
+        try:
+            data = JSONListFormatter("about_us", name_obj=serializer.data)
+        except:
+            data = []
+        return Response(data, status=status.HTTP_200_OK)
+
+class SliderListApiView(APIView):
+
+    def get(self, request, *args, **kwargs):
+        sliders = Slider.objects.all().order_by('-id')
+        serializer = SliderSerializer(sliders, many=True)
+        try:
+            data = JSONListFormatter("slider", serializer.data)
+        except:
+            data = []
+
+        return Response(data, status=status.HTTP_200_OK)
+
+class SliderDetailApiView(APIView):
+
+    def get_object(self, slider_id):
+        try:
+            return Slider.objects.get(id=slider_id)
+        except Slider.DoesNotExist:
+            return None
+
+    def get(self, request, slider_id, *args, **kwargs):
+        '''
+            Retrieves the Post with given slider_id
+        '''
+        slider_instance = self.get_object(slider_id)
+        if not slider_instance:
+            return Response(
+                {"response": "Post with given id does not exist"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        serializer = SliderSerializer(slider_instance)
+        try:
+            data = JSONListFormatter("slider", name_obj=serializer.data)
+        except:
+            data = []
+        return Response(data, status=status.HTTP_200_OK)

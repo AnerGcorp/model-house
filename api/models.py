@@ -42,3 +42,40 @@ class Logo(models.Model):
 
     def __str__(self):
         return self.name
+
+class AboutUs(models.Model):
+    class Meta:
+        verbose_name_plural = "About Us"
+
+    phone_number = models.CharField(max_length=100)
+    email = models.CharField(max_length=255)
+    web_image = models.ImageField(upload_to="images/map")
+    mobile_image = models.ImageField(upload_to="images/map")
+    # can be the location of map, lantitute and longtitude
+    location = models.CharField(max_length=255, blank=True)
+
+    def __str__(self):
+        return self.email
+
+class SubAboutUs(models.Model):
+    class Meta:
+        verbose_name_plural = "SubAbout Us"
+    address = models.CharField(max_length=2000)
+    belong = models.ForeignKey('AboutUs', on_delete=models.CASCADE, related_name='about_us')
+    lang = models.ForeignKey('Language', on_delete=models.CASCADE, related_name='lang_abu')
+
+
+class Slider(models.Model):
+    # One banner for slider
+    web_image = models.ImageField(upload_to='images/slider')
+    mobile_image = models.ImageField(upload_to='images/slider')
+    # there are limited space in frontend
+    link = models.CharField(max_length=2048)
+    is_active = models.BooleanField(default=False)
+
+class SubSlider(models.Model):
+    title = models.CharField(max_length=500)
+    button = models.CharField(max_length=100)
+    belong = models.ForeignKey('Slider', on_delete=models.CASCADE, related_name='slider')
+    lang = models.ForeignKey('Language', on_delete=models.CASCADE, related_name='lang_sld')
+

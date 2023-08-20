@@ -2,8 +2,9 @@ from django.contrib import admin
 from super_inlines.admin import SuperInlineModelAdmin, SuperModelAdmin
 
 from .models import (
-    Language, SubCategory, Category, Logo
-    # Slider, SubSlider, Statistics, SubStatistics,
+    Language, SubCategory, Category, Logo, AboutUs, SubAboutUs,
+    Slider, SubSlider,
+    # Statistics, SubStatistics,
     # MoreAboutUs, SubMoreAboutUs, News, NewsImage, SubNews, Gallery,
     # GalleryImage, SubGallery, ContactUs, AboutUs, SubAboutUs, Contacts,
     # SubContacts, AboutCompany, SubAboutCompany, Partner
@@ -15,7 +16,20 @@ class SubCategoryInlineAdmin(admin.StackedInline):
 class CategoryAdmin(admin.ModelAdmin):
     inlines = [SubCategoryInlineAdmin, ]
 
+class SubAboutUsInlineAdmin(admin.StackedInline):
+    model = SubAboutUs
 
-admin.site.register(Logo)
-admin.site.register(Category, CategoryAdmin)
+class AboutUsAdmin(admin.ModelAdmin):
+    inlines = [SubAboutUsInlineAdmin, ]
+
+class SubSliderInlineAdmin(admin.StackedInline):
+    model = SubSlider
+
+class SliderAdmin(admin.ModelAdmin):
+    inlines = [SubSliderInlineAdmin, ]
+
 admin.site.register(Language)
+admin.site.register(Category, CategoryAdmin)
+admin.site.register(Logo)
+admin.site.register(AboutUs, AboutUsAdmin)
+admin.site.register(Slider, SliderAdmin)
