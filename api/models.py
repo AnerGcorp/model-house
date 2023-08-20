@@ -141,3 +141,21 @@ class NewsImage(models.Model):
     image = models.ImageField(upload_to="images/news")
     belongs_to = models.ForeignKey(
         News, on_delete=models.CASCADE, related_name="news_images")
+# Services
+class Service(models.Model):
+    class Meta:
+        verbose_name_plural = "Services"
+        verbose_name = "Service"
+
+    # service page
+    link = models.CharField(max_length=2048, blank=True, null=True)
+    image = models.ImageField(
+        upload_to="images/services", blank=False, null=False)
+    is_active = models.BooleanField(default=False)
+
+class SubService(models.Model):
+    title = models.CharField(max_length=500)
+    description = RichTextField()
+    button = models.CharField(max_length=2048, blank=True, null=True)
+    belong = models.ForeignKey('Service', on_delete=models.CASCADE, related_name='service')
+    lang = models.ForeignKey('Language', on_delete=models.CASCADE, related_name='lang_ser')

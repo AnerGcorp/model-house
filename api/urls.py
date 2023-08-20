@@ -5,6 +5,7 @@ from .views import (
     AboutUsDetailApiView, SliderListApiView, SliderDetailApiView,
     AboutCompanyListApiView, AboutCompanyDetailApiView, MoreAboutUsListApiView,
     MoreAboutUsDetailApiView, NewsListApiView, NewsDetailApiView,
+    ServiceListApiView, ServiceDetailApiView
     # StatisticsListApiView, StatisticsDetailApiView,
     #   GalleryListApiView, GalleryDetailApiView, ContactUsViewSet,
     #  ContactsListApiView, ContactsDetailApiView, PartnerViewSet
@@ -29,10 +30,14 @@ urlpatterns = [
     path('company/', AboutCompanyListApiView.as_view(), name="com"),
     path('company/<int:com_id>', AboutCompanyDetailApiView.as_view(), name="com_detail"),
     # banners
-    path('banner/', MoreAboutUsListApiView.as_view(), name="banner"),
-    path('banner/<int:mau_id>', MoreAboutUsDetailApiView.as_view(), name="banner_detail"),
+    path('banners/', MoreAboutUsListApiView.as_view(), name="banner"),
+    path('banners/<int:mau_id>', MoreAboutUsDetailApiView.as_view(), name="banner_detail"),
     path('news/', NewsListApiView.as_view(), name="news"),
     path("news/<int:news_id>", NewsDetailApiView.as_view(), name="news_detail"),
+    # services
+    path('services/', ServiceListApiView.as_view(), name="service"),
+    path('services/<int:ser_id>', ServiceDetailApiView.as_view(), name="service_detail"),
+
     # path('statistics/', StatisticsListApiView.as_view(), name="statistics"),
     # path('statistics/<int:statistics_id>', StatisticsDetailApiView.as_view(), name="statistics_detail"),
     # path('gallery/', GalleryListApiView.as_view(), name="gallery"),

@@ -3,13 +3,14 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework import status
 from .models import (
-    Category, Logo, AboutUs, Slider, AboutCompany, MoreAboutUs, News
+    Category, Logo, AboutUs, Slider, AboutCompany, MoreAboutUs, News,
+    Service
 )
 
 from .serializers import (
     CategorySerializer, LogoSerializer, AboutUsSerializer,
     SliderSerializer, AboutCompanySerializer, MoreAboutUsSerializer,
-    NewsSerializer
+    NewsSerializer, ServiceSerializer
 )
 
 from .utils import JSONListFormatter
@@ -238,6 +239,43 @@ class NewsDetailApiView(APIView):
         serializer = NewsSerializer(news_instance)
         try:
             data = JSONListFormatter("news", name_obj=serializer.data)
+        except:
+            data = []
+        return Response(data, status=status.HTTP_200_OK)
+
+class ServiceListApiView(APIView):
+
+    def get(self, request, *args, **kwargs):
+        service = Service.objects.all().order_by('-id')
+        serializer = ServiceSerializer(service, many=True)
+        try:
+            data = JSONListFormatter("service", serializer.data)
+        except:
+            data = []
+
+        return Response(data, status=status.HTTP_200_OK)
+
+class ServiceDetailApiView(APIView):
+
+    def get_object(self, ser_id):
+        try:
+            return Service.objects.get(id=ser_id)
+        except Service.DoesNotExist:
+            return None
+
+    def get(self, request, ser_id, *args, **kwargs):
+        '''
+            Retrieves the object with given ser_id
+        '''
+        ser_instance = self.get_object(ser_id)
+        if not ser_instance:
+            return Response(
+                {"response": "Object with given id does not exist"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        serializer = ServiceSerializer(ser_instance)
+        try:
+            data = JSONListFormatter("service", name_obj=serializer.data)
         except:
             data = []
         return Response(data, status=status.HTTP_200_OK)
