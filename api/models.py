@@ -1,6 +1,6 @@
 from django.db import models
 from django.core.validators import FileExtensionValidator
-# from ckeditor.fields import RichTextField
+from ckeditor.fields import RichTextField
 
 # Create your models here.
 class Language(models.Model):
@@ -78,4 +78,21 @@ class SubSlider(models.Model):
     button = models.CharField(max_length=100)
     belong = models.ForeignKey('Slider', on_delete=models.CASCADE, related_name='slider')
     lang = models.ForeignKey('Language', on_delete=models.CASCADE, related_name='lang_sld')
+
+class AboutCompany(models.Model):
+    class Meta:
+        verbose_name_plural = "About Company"
+    logo = models.FileField(
+        upload_to="images/logo",
+        validators=[FileExtensionValidator(['png', 'jpg', 'svg', "jpeg", "webp"])],
+        blank=True, null=True)
+
+class SubAboutCompany(models.Model):
+    class Meta:
+        verbose_name_plural = "Sub About Company"
+
+    name = models.CharField(max_length=255, blank=True, null=True)
+    description = RichTextField()
+    belong = models.ForeignKey('AboutCompany', on_delete=models.CASCADE, related_name='company')
+    lang = models.ForeignKey('Language', on_delete=models.CASCADE, related_name='lang_com')
 

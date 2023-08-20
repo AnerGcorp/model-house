@@ -2,13 +2,12 @@ from django.urls import include, path
 from rest_framework import routers
 from .views import (
     CategoryListApiView, CategoryDetailApiView, LogoViewSet, AboutUsListApiView,
-    AboutUsDetailApiView, SliderListApiView,SliderDetailApiView,
+    AboutUsDetailApiView, SliderListApiView, SliderDetailApiView,
+    AboutCompanyListApiView, AboutCompanyDetailApiView,
     # StatisticsListApiView, StatisticsDetailApiView,
     # MoreAboutUsListApiView, MoreAboutUsDetailApiView, NewsListApiView,
     # NewsDetailApiView, GalleryListApiView, GalleryDetailApiView, ContactUsViewSet,
-    #  ContactsListApiView,
-    # ContactsDetailApiView, AboutCompanyListApiView, AboutCompanyDetailApiView,
-    # PartnerViewSet
+    #  ContactsListApiView, ContactsDetailApiView, PartnerViewSet
 )
 
 app_name = 'modeller'
@@ -27,6 +26,8 @@ urlpatterns = [
     path('about-us/<int:abu_id>', AboutUsDetailApiView.as_view(), name="abu_detail"),
     path('slider/', SliderListApiView.as_view(), name="slider"),
     path('slider/<int:slider_id>', SliderDetailApiView.as_view(), name="slider_detail"),
+    path('company/', AboutCompanyListApiView.as_view(), name="com"),
+    path('company/<int:com_id>', AboutCompanyDetailApiView.as_view(), name="com_detail"),
     # path('statistics/', StatisticsListApiView.as_view(), name="statistics"),
     # path('statistics/<int:statistics_id>', StatisticsDetailApiView.as_view(), name="statistics_detail"),
     # path('mau/', MoreAboutUsListApiView.as_view(), name="mau"),
@@ -37,7 +38,5 @@ urlpatterns = [
     # path("gallery/<int:gallery_id>", GalleryDetailApiView.as_view(), name="gallery_detail"),
     # path('contacts/', ContactsListApiView.as_view(), name="cont"),
     # path('contacts/<int:cont_id>', ContactsDetailApiView.as_view(), name="cont_detail"),
-    # path('company/', AboutCompanyListApiView.as_view(), name="com"),
-    # path('company/<int:com_id>', AboutCompanyDetailApiView.as_view(), name="com_detail"),
 
 ]

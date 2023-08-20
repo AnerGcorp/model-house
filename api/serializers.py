@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import (
     Language, Category, SubCategory, Logo, SubAboutUs, AboutUs,
-    SubSlider, Slider
+    SubSlider, Slider, SubAboutCompany, AboutCompany
 
 )
 
@@ -49,4 +49,16 @@ class SliderSerializer(serializers.ModelSerializer):
     slider = SubSliderSerializer(many=True)
     class Meta:
         model = Slider
+        fields = "__all__"
+
+class SubAboutCompanySerializer(serializers.ModelSerializer):
+    lang = LanguageSerializer()
+    class Meta:
+        model = SubAboutCompany
+        exclude = ("id", "belong",)
+
+class AboutCompanySerializer(serializers.ModelSerializer):
+    company = SubAboutCompanySerializer(many=True)
+    class Meta:
+        model = AboutCompany
         fields = "__all__"
