@@ -3,12 +3,12 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework import status
 from .models import (
-    Category, Logo, AboutUs, Slider, AboutCompany
+    Category, Logo, AboutUs, Slider, AboutCompany, MoreAboutUs
 )
 
 from .serializers import (
     CategorySerializer, LogoSerializer, AboutUsSerializer,
-    SliderSerializer, AboutCompanySerializer
+    SliderSerializer, AboutCompanySerializer, MoreAboutUsSerializer
 )
 
 from .utils import JSONListFormatter
@@ -167,3 +167,39 @@ class AboutCompanyDetailApiView(APIView):
             data = []
         return Response(data, status=status.HTTP_200_OK)
 
+class MoreAboutUsListApiView(APIView):
+
+    def get(self, request, *args, **kwargs):
+        more_about_us = MoreAboutUs.objects.all().order_by('-id')
+        serializer = MoreAboutUsSerializer(more_about_us, many=True)
+        try:
+            data = JSONListFormatter("more_about_us", serializer.data)
+        except:
+            data = []
+
+        return Response(data, status=status.HTTP_200_OK)
+
+class MoreAboutUsDetailApiView(APIView):
+
+    def get_object(self, mau_id):
+        try:
+            return MoreAboutUs.objects.get(id=mau_id)
+        except MoreAboutUs.DoesNotExist:
+            return None
+
+    def get(self, request, mau_id, *args, **kwargs):
+        '''
+            Retrieves the object with given mau_id
+        '''
+        mau_instance = self.get_object(mau_id)
+        if not mau_instance:
+            return Response(
+                {"response": "Object with given id does not exist"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        serializer = MoreAboutUsSerializer(mau_instance)
+        try:
+            data = JSONListFormatter("more_about_us", name_obj=serializer.data)
+        except:
+            data = []
+        return Response(data, status=status.HTTP_200_OK)

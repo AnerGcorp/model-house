@@ -3,9 +3,10 @@ from rest_framework import routers
 from .views import (
     CategoryListApiView, CategoryDetailApiView, LogoViewSet, AboutUsListApiView,
     AboutUsDetailApiView, SliderListApiView, SliderDetailApiView,
-    AboutCompanyListApiView, AboutCompanyDetailApiView,
+    AboutCompanyListApiView, AboutCompanyDetailApiView, MoreAboutUsListApiView,
+    MoreAboutUsDetailApiView,
     # StatisticsListApiView, StatisticsDetailApiView,
-    # MoreAboutUsListApiView, MoreAboutUsDetailApiView, NewsListApiView,
+    #  NewsListApiView,
     # NewsDetailApiView, GalleryListApiView, GalleryDetailApiView, ContactUsViewSet,
     #  ContactsListApiView, ContactsDetailApiView, PartnerViewSet
 )
@@ -28,10 +29,11 @@ urlpatterns = [
     path('slider/<int:slider_id>', SliderDetailApiView.as_view(), name="slider_detail"),
     path('company/', AboutCompanyListApiView.as_view(), name="com"),
     path('company/<int:com_id>', AboutCompanyDetailApiView.as_view(), name="com_detail"),
+    # banners
+    path('banner/', MoreAboutUsListApiView.as_view(), name="banner"),
+    path('banner/<int:mau_id>', MoreAboutUsDetailApiView.as_view(), name="banner_detail"),
     # path('statistics/', StatisticsListApiView.as_view(), name="statistics"),
     # path('statistics/<int:statistics_id>', StatisticsDetailApiView.as_view(), name="statistics_detail"),
-    # path('mau/', MoreAboutUsListApiView.as_view(), name="mau"),
-    # path('mau/<int:mau_id>', MoreAboutUsDetailApiView.as_view(), name="mau_detail"),
     # path('news/', NewsListApiView.as_view(), name="news"),
     # path("news/<int:news_id>", NewsDetailApiView.as_view(), name="news_detail"),
     # path('gallery/', GalleryListApiView.as_view(), name="gallery"),

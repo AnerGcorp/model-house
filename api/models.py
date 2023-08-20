@@ -96,3 +96,22 @@ class SubAboutCompany(models.Model):
     belong = models.ForeignKey('AboutCompany', on_delete=models.CASCADE, related_name='company')
     lang = models.ForeignKey('Language', on_delete=models.CASCADE, related_name='lang_com')
 
+# Banner Section
+class MoreAboutUs(models.Model):
+    class Meta:
+        verbose_name_plural = "Banners"
+        verbose_name = "Banner"
+
+    # video or image link
+    link = models.CharField(max_length=2048, blank=True, null=True)
+    thumbnail = models.ImageField(
+        upload_to="images/works", blank=False, null=False)
+    is_active = models.BooleanField(default=False)
+
+class SubMoreAboutUs(models.Model):
+    title = models.CharField(max_length=500)
+    description = RichTextField()
+    button = models.CharField(max_length=2048, blank=True, null=True)
+    belong = models.ForeignKey('MoreAboutUs', on_delete=models.CASCADE, related_name='more_about_us')
+    lang = models.ForeignKey('Language', on_delete=models.CASCADE, related_name='lang_mau')
+
