@@ -115,3 +115,29 @@ class SubMoreAboutUs(models.Model):
     belong = models.ForeignKey('MoreAboutUs', on_delete=models.CASCADE, related_name='more_about_us')
     lang = models.ForeignKey('Language', on_delete=models.CASCADE, related_name='lang_mau')
 
+class News(models.Model):
+    class Meta:
+        verbose_name_plural = "News"
+
+    link = models.CharField(max_length=2048, blank=True, null=True)
+    is_active = models.BooleanField(default=False)
+    created = models.DateTimeField(auto_now_add=True, auto_now=False)
+    updated = models.DateTimeField(auto_now=True, blank=True)
+
+
+class SubNews(models.Model):
+    title = models.CharField(max_length=500)
+    description = RichTextField()
+    button = models.CharField(max_length=100, blank=True, null=True)
+    belong = models.ForeignKey('News', on_delete=models.CASCADE, related_name='news')
+    lang = models.ForeignKey('Language', on_delete=models.CASCADE, related_name='lang_news')
+
+
+    class Meta:
+        verbose_name_plural = "SubNews"
+
+class NewsImage(models.Model):
+    title = models.CharField(max_length=255, blank=True, null=True)
+    image = models.ImageField(upload_to="images/news")
+    belongs_to = models.ForeignKey(
+        News, on_delete=models.CASCADE, related_name="news_images")

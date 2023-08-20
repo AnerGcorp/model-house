@@ -3,12 +3,13 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework import status
 from .models import (
-    Category, Logo, AboutUs, Slider, AboutCompany, MoreAboutUs
+    Category, Logo, AboutUs, Slider, AboutCompany, MoreAboutUs, News
 )
 
 from .serializers import (
     CategorySerializer, LogoSerializer, AboutUsSerializer,
-    SliderSerializer, AboutCompanySerializer, MoreAboutUsSerializer
+    SliderSerializer, AboutCompanySerializer, MoreAboutUsSerializer,
+    NewsSerializer
 )
 
 from .utils import JSONListFormatter
@@ -200,6 +201,43 @@ class MoreAboutUsDetailApiView(APIView):
         serializer = MoreAboutUsSerializer(mau_instance)
         try:
             data = JSONListFormatter("more_about_us", name_obj=serializer.data)
+        except:
+            data = []
+        return Response(data, status=status.HTTP_200_OK)
+
+class NewsListApiView(APIView):
+
+    def get(self, request, *args, **kwargs):
+        news = News.objects.all().order_by('-id')
+        serializer = NewsSerializer(news, many=True)
+        try:
+            data = JSONListFormatter("news", serializer.data)
+        except:
+            data = []
+
+        return Response(data, status=status.HTTP_200_OK)
+
+class NewsDetailApiView(APIView):
+
+    def get_object(self, news_id):
+        try:
+            return News.objects.get(id=news_id)
+        except News.DoesNotExist:
+            return None
+
+    def get(self, request, news_id, *args, **kwargs):
+        '''
+            Retrieves the object with given news_id
+        '''
+        news_instance = self.get_object(news_id)
+        if not news_instance:
+            return Response(
+                {"response": "Object with given id does not exist"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        serializer = NewsSerializer(news_instance)
+        try:
+            data = JSONListFormatter("news", name_obj=serializer.data)
         except:
             data = []
         return Response(data, status=status.HTTP_200_OK)

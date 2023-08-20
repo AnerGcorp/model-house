@@ -4,9 +4,9 @@ from super_inlines.admin import SuperInlineModelAdmin, SuperModelAdmin
 from .models import (
     Language, SubCategory, Category, Logo, AboutUs, SubAboutUs,
     Slider, SubSlider, SubAboutCompany, AboutCompany, SubMoreAboutUs,
-    MoreAboutUs,
+    MoreAboutUs, NewsImage, SubNews, News,
     # Statistics, SubStatistics,
-    #  News, NewsImage, SubNews, Gallery,
+    #   Gallery,
     # GalleryImage, SubGallery, ContactUs, AboutUs, SubAboutUs, Contacts,
     # SubContacts, AboutCompany, SubAboutCompany, Partner
     )
@@ -41,6 +41,15 @@ class SubMoreAboutUsInlineAdmin(admin.StackedInline):
 class MoreAboutUsAdmin(admin.ModelAdmin):
     inlines = [SubMoreAboutUsInlineAdmin, ]
 
+class NewsImageInlineAdmin(admin.TabularInline):
+    model = NewsImage
+
+class SubNewsInlineAdmin(admin.StackedInline):
+    model = SubNews
+
+class NewsAdmin(admin.ModelAdmin):
+    inlines = (SubNewsInlineAdmin, NewsImageInlineAdmin)
+
 
 admin.site.register(Language)
 admin.site.register(Category, CategoryAdmin)
@@ -49,3 +58,4 @@ admin.site.register(AboutUs, AboutUsAdmin)
 admin.site.register(Slider, SliderAdmin)
 admin.site.register(AboutCompany, AboutCompanyAdmin)
 admin.site.register(MoreAboutUs, MoreAboutUsAdmin)
+admin.site.register(News, NewsAdmin)

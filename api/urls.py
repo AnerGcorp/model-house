@@ -4,10 +4,9 @@ from .views import (
     CategoryListApiView, CategoryDetailApiView, LogoViewSet, AboutUsListApiView,
     AboutUsDetailApiView, SliderListApiView, SliderDetailApiView,
     AboutCompanyListApiView, AboutCompanyDetailApiView, MoreAboutUsListApiView,
-    MoreAboutUsDetailApiView,
+    MoreAboutUsDetailApiView, NewsListApiView, NewsDetailApiView,
     # StatisticsListApiView, StatisticsDetailApiView,
-    #  NewsListApiView,
-    # NewsDetailApiView, GalleryListApiView, GalleryDetailApiView, ContactUsViewSet,
+    #   GalleryListApiView, GalleryDetailApiView, ContactUsViewSet,
     #  ContactsListApiView, ContactsDetailApiView, PartnerViewSet
 )
 
@@ -32,10 +31,10 @@ urlpatterns = [
     # banners
     path('banner/', MoreAboutUsListApiView.as_view(), name="banner"),
     path('banner/<int:mau_id>', MoreAboutUsDetailApiView.as_view(), name="banner_detail"),
+    path('news/', NewsListApiView.as_view(), name="news"),
+    path("news/<int:news_id>", NewsDetailApiView.as_view(), name="news_detail"),
     # path('statistics/', StatisticsListApiView.as_view(), name="statistics"),
     # path('statistics/<int:statistics_id>', StatisticsDetailApiView.as_view(), name="statistics_detail"),
-    # path('news/', NewsListApiView.as_view(), name="news"),
-    # path("news/<int:news_id>", NewsDetailApiView.as_view(), name="news_detail"),
     # path('gallery/', GalleryListApiView.as_view(), name="gallery"),
     # path("gallery/<int:gallery_id>", GalleryDetailApiView.as_view(), name="gallery_detail"),
     # path('contacts/', ContactsListApiView.as_view(), name="cont"),

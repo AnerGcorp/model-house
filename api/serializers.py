@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .models import (
     Language, Category, SubCategory, Logo, SubAboutUs, AboutUs,
     SubSlider, Slider, SubAboutCompany, AboutCompany, SubMoreAboutUs,
-    MoreAboutUs
+    MoreAboutUs, NewsImage, SubNews, News,
 
 )
 
@@ -75,4 +75,22 @@ class MoreAboutUsSerializer(serializers.ModelSerializer):
     more_about_us = SubMoreAboutUsSerializer(many=True)
     class Meta:
         model = MoreAboutUs
+        fields = "__all__"
+
+class NewsImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = NewsImage
+        fields = "__all__"
+
+class SubNewsSerializer(serializers.ModelSerializer):
+    lang = LanguageSerializer()
+    class Meta:
+        model = SubNews
+        exclude = ("id", "belong",)
+
+class NewsSerializer(serializers.ModelSerializer):
+    news = SubNewsSerializer(many=True)
+    news_images = NewsImageSerializer(many=True)
+    class Meta:
+        model = News
         fields = "__all__"
