@@ -20,6 +20,7 @@ class Category(models.Model):
         validators=[FileExtensionValidator(['png', 'jpg', 'svg', "jpeg", "webp"])],
         blank=True, null=True)
     link = models.CharField(max_length=2048)
+    sort_order = models.PositiveIntegerField(unique=True, blank=False)
 
 class SubCategory(models.Model):
     class Meta:

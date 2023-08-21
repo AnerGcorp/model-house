@@ -32,6 +32,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'admin_interface',
+    'colorfield',
+    'super_inlines',
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -132,7 +135,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 #ckeditor upload path
-CKEDITOR_UPLOAD_PATH="uploads/"
+# CKEDITOR_UPLOAD_PATH="uploads/"
 
 
 # Default primary key field type
